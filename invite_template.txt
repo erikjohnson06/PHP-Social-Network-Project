@@ -1,0 +1,25 @@
+<p>Greetings, #NAME#!</p>
+
+<p>You have been personally invited to join my personal network!<br/><br/>
+
+"My Personal Network" is a great way to connect with others, share your ideas, 
+or just have fun. </p>
+
+
+Inviting member: #FROM_MEMBER# (#FROM_EMAIL#) <br>
+Invitation date: #DATE#
+
+
+<p>Here's what else your sponsor had to say:</p>
+
+<p>#MESSAGE#</p>
+
+<p>Interested in joining? Use the following link to sign up:</p>
+
+<a href="http://ejohnson4.userworld.com/social/join.php">Join My Personal Network </a>
+
+
+
+
+
+

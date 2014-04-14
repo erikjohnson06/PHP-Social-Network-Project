@@ -1,0 +1,148 @@
+Database Logical Design for Social Network Communication
+
+Relvar 1: member_wall_posts
+
+  predicates: Member Wall Posts (member_wall_posts) contain a text entry (post_entry), 
+  are identified by an id (post_id) and are authored by member (author_id) on date (post_date).
+
+  Type Constraints:
+  Each post_id should be unique.
+  Each post_id, author_id, and wall_id should not be a negative value.
+  Each post_entry is limited to 150 characters in length. 
+
+  Database Constraints:
+  Each post_id value should be unique.
+  
+  Referential Constraint:
+  Each author_id should reference an existing member in the member_info and member_login relvars
+  Each wall_id should reference an existing member in the member_info and member_login relvars
+  
+  Entity Integrity:
+  post_id should should always exist and no two tuples should have the same post_id value
+
+  Candidate Keys: post_id
+  Primary Key: post_id
+  Foreign Keys: author_id
+
+  Relvar construction: 
+  post_id  - int unsigned NOT NULL primary key auto_increment
+  author_id - int unsigned NOT NULL foreign key (member_info.memberID & member_login.memberID)
+  wall_id - int unsigned NOT NULL foreign key (member_info.memberID & member_login.memberID)
+  post_entry - varchar(150) NOT NULL
+  post_date - datetime NOT NULL
+  date_deactivated - datetime NOT NULL
+
+
+
+
+
+Relvar 2: member_wall_comments
+
+  predicates: Member Wall Comments (member_wall_comments) contain text entries (comment_entry), 
+  are identified by an id (comment_id), relate to to corresponding wall post (post_id) and are authored 
+  by member (author_id) on date (comment_date).
+
+  Type Constraints:
+  Each comment_id should be unique.
+  Each comment_id, post_id and author_id should not be a negative value.
+  Each comment_entry is limited to 150 characters in length. 
+
+  Database Constraints:
+  Each comment_id value should be unique.
+  
+  Referential Constraint:
+  Each author_id should reference an existing member in the member_info and member_login relvars
+  Each post_id should reference an existing wall post in the member_wall_posts relvar
+  
+  Entity Integrity:
+  comment_id should should always exist and no two tuples should have the same comment_id value
+
+  Candidate Keys: comment_id
+  Primary Key: comment_id
+  Foreign Keys: post_id, author_id
+
+  Relvar construction: 
+  comment_id - int unsigned NOT NULL primary key auto_increment
+  post_id - int unsigned NOT NULL foreign key (member_wall_posts.post_id)
+  author_id - int unsigned NOT NULL foreign key (member_info.memberID & member_login.memberID)
+  comment_entry - varchar(150) NOT NULL
+  comment_date - datetime NOT NULL
+  date_deactivated - datetime NOT NULL
+
+
+
+
+Relvar 3: group_wall_posts
+
+  predicates: Group Wall Posts (group_wall_posts) contain text entries (post_entry), 
+  are identified by an id (post_id), are associated with a group (group_id) and are 
+  authored by member (author_id) on date (post_date).
+
+  Type Constraints:
+  Each post_id should be unique.
+  Each post_id, group_id and author_id should not be a negative value.
+  Each post_entry is limited to 150 characters in length. 
+
+  Database Constraints:
+  Each post_id value should be unique.
+  
+  Referential Constraint:
+  Each author_id should reference an existing member in the member_info and member_login relvars.
+  Each group_id should reference an existing group in the groups relvar.
+  
+  Entity Integrity:
+  post_id should should always exist and no two tuples should have the same post_id value.
+  
+  Candidate Keys: post_id
+  Primary Key: post_id
+  Foreign Keys: group_id, author_id
+  
+  Relvar construction: 
+  post_id  - int unsigned NOT NULL primary key auto_increment
+  group_id - int unsigned NOT NULL foreign key (groups.group_id)
+  author_id - int unsigned NOT NULL foreign key (member_info.memberID & member_login.memberID)
+  post_entry - varchar(150) NOT NULL
+  post_date - datetime NOT NULL
+  date_deactivated - datetime NOT NULL
+
+
+
+
+
+Relvar 4: group_wall_comments
+
+  predicates: Group Wall Comments (group_wall_comments) contain text entries (comment_entry), 
+  are identified by an id (comment_id), relate to to corresponding wall post (post_id) and are 
+  authored by member (author_id) on date (comment_date).
+
+  Type Constraints:
+  Each comment_id should be unique.
+  Each comment_id, post_id and author_id should not be a negative value.
+  Each comment_entry is limited to 150 characters in length. 
+
+  Database Constraints:
+  Each comment_id value should be unique.
+  
+  Referential Constraint:
+  Each author_id should reference an existing member in the member_info and member_login relvars.
+  Each post_id should reference an existing wall post in the group_wall_posts relvar.
+
+  
+  Entity Integrity:
+  comment_id should should always exist and no two tuples should have the same comment_id value
+
+  Candidate Keys: comment_id
+  Primary Key: comment_id
+  Foreign Keys: post_id, author_id
+
+  Relvar construction: 
+  comment_id - int unsigned NOT NULL primary key auto_increment
+  post_id - int unsigned NOT NULL foreign key (group_wall_posts.post_id)
+  author_id - int unsigned NOT NULL foreign key (member_info.memberID & member_login.memberID)
+  comment_entry - varchar(150) NOT NULL
+  comment_date - datetime NOT NULL
+  date_deactivated - datetime NOT NULL
+
+
+Summary: These four relvars will be included in the social_network database to provide
+a means of storage for both member and group wall posts and comments made on them. 
